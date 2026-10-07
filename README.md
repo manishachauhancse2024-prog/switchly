@@ -1,4 +1,6 @@
-# ASSIGNMENT FOR SESSION 2
+# Switchly
+
+## ASSIGNMENT FOR SESSION 2
 
 ## 1- Add a description field to Flag
 
@@ -6,38 +8,84 @@ Added an optional `description` field to Flag.
 
 ### Files Touched
 
-- `FlagController.java`
-- `CreateFlagRequest.java`
-- `Flag.java`
-- `FlagService.java`
+#### 1. `FlagController.java`
 
-Now a flag can be created with or without a description.
+Passed the description from the request to the service.
+
+#### 2. `CreateFlagRequest.java`
+
+Added the optional `description` field.
+
+#### 3. `Flag.java`
+
+Added the `description` field, constructor parameter and getter.
+
+#### 4. `FlagService.java`
+
+Updated the create method to accept the description.
+
+### Result
+
+A flag can now be created with or without a description.
+
+With description:
+
+{
+    "key": "new-feature",
+    "name": "New Feature",
+    "description": "Testing the new feature"
+}
+
+Without description:
+
+{
+    "key": "new-feature",
+    "name": "New Feature"
+}
 
 ---
 
 ## 2- Add DELETE /api/v1/flags/{flagId}
 
-Added a DELETE API to delete a flag.
-
-- Existing flag → `204 No Content`
-- Non-existing flag → `404 Not Found`
+Added DELETE API for deleting a flag.
 
 ### Files Touched
 
-- `FlagController.java`
-- `FlagService.java`
-- `FlagRepository.java`
-- `InMemoryFlagRepository.java`
+#### 1. `FlagController.java`
+
+Added the DELETE endpoint.
+
+#### 2. `FlagService.java`
+
+Added the delete logic and checks whether the flag exists.
+
+#### 3. `FlagRepository.java`
+
+Added the delete method.
+
+#### 4. `InMemoryFlagRepository.java`
+
+Implemented the delete operation.
+
+### Result
+
+Existing flag → `204 No Content`
+
+Non-existing flag → `404 Not Found`
 
 ---
 
-## 3- Think, don't code
+## 3. Think, don't code
 
-Currently, one flag has only one `enabled` value.
+Currently, each flag has only one `enabled` value.
 
-To have the flag ON in `test` but OFF in `production`, we would need to store the flag state separately for each environment.
+So if `new-checkout` is ON, it is ON for everyone.
+
+To make it ON in the test environment but OFF in production, the flag state would need to be stored separately for each environment.
 
 Example:
 
-- `test` → ON
-- `production` → OFF
+- test → ON
+- production → OFF
+
+The Flag model, repository, service and API would need to support environment-specific flag states.
